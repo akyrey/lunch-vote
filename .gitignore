@@ -1,0 +1,8 @@
+.env
+.next/
+design_handoff_lunchvote/
+node_modules/
+.DS_Store
+dist
+dist-ssr
+*.local
