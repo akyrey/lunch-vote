@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, List, BarChart2 } from "lucide-react";
+import { Home, List, BarChart2, ShieldCheck } from "lucide-react";
 
 const TABS = [
   { label: "Today", href: "/", icon: Home, match: ["/", "/vote", "/results"] },
@@ -10,8 +10,20 @@ const TABS = [
   { label: "Stats", href: "/stats", icon: BarChart2, match: ["/stats"] },
 ];
 
-export function TabBar() {
+const ADMIN_TAB = {
+  label: "Admin",
+  href: "/admin/places",
+  icon: ShieldCheck,
+  match: ["/admin"],
+};
+
+interface TabBarProps {
+  isAdmin?: boolean;
+}
+
+export function TabBar({ isAdmin }: TabBarProps) {
   const pathname = usePathname();
+  const tabs = isAdmin ? [...TABS, ADMIN_TAB] : TABS;
 
   return (
     <nav
@@ -22,9 +34,9 @@ export function TabBar() {
         WebkitBackdropFilter: "blur(12px)",
       }}
     >
-      {TABS.map(({ label, href, icon: Icon, match }) => {
+      {tabs.map(({ label, href, icon: Icon, match }) => {
         const active =
-          match.some((m) => pathname === m) ||
+          match.some((m) => pathname === m || pathname.startsWith(m)) ||
           (href !== "/" && pathname.startsWith(href));
         return (
           <Link

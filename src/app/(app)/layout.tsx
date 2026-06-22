@@ -13,7 +13,7 @@ export default async function AppLayout({
   return (
     <div className="flex flex-col h-dvh max-w-lg mx-auto">
       <div className="flex-1 overflow-y-auto overflow-x-hidden">{children}</div>
-      <TabBar />
+      <TabBar isAdmin={session.user.isAdmin ?? false} />
     </div>
   );
 }
